@@ -131,3 +131,4 @@
 /Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/obj/Debug/net8.0/Mission11_Keeney.pdb
 /Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/obj/Debug/net8.0/Mission11_Keeney.genruntimeconfig.cache
 /Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/obj/Debug/net8.0/ref/Mission11_Keeney.dll
+/Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/obj/Debug/net8.0/Mission11_Keeney.sourcelink.json

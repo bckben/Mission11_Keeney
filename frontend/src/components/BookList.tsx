@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { addToCart, getCart } from '../services/CartService';
+import { Link } from 'react-router-dom';
 
 interface Book {
   bookID: number;
@@ -12,66 +14,106 @@ interface Book {
   price: number;
 }
 
+interface BookApiResponse {
+  books: Book[];
+  totalPages: number;
+}
+
 const BookList: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
-  const [perPage, setPerPage] = useState(5);
   const [page, setPage] = useState(1);
-  const [sortAsc, setSortAsc] = useState(true);
+  const [totalPages, setTotalPages] = useState(1);
+  const [category, setCategory] = useState<string>('All');
+  const [categories, setCategories] = useState<string[]>([]);
+  const [cartCount, setCartCount] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
 
+  // Fetch paginated books
+  useEffect(() => {
+    fetch(`http://localhost:5006/Books?pageNum=${page}&category=${category}`)
+      .then((res) => res.json())
+      .then((data: BookApiResponse) => {
+        setBooks(data.books);
+        setTotalPages(data.totalPages);
+      })
+      .catch((err) => console.error('Error fetching books:', err));
+  }, [page, category]);
+
+  // Load categories
   useEffect(() => {
     fetch('http://localhost:5006/Books')
       .then((res) => res.json())
-      .then((data) => setBooks(data))
-      .catch((err) => console.error('Error fetching books:', err));
+      .then((data: BookApiResponse) => {
+        const uniqueCategories = Array.from(new Set(data.books.map((b) => b.category)));
+        setCategories(['All', ...uniqueCategories]);
+      })
+      .catch((err) => console.error('Error loading categories:', err));
   }, []);
 
-  const sortedBooks = [...books].sort((a, b) =>
-    sortAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)
-  );
+  // Load cart summary
+  const updateCartSummary = () => {
+    const cart = getCart();
+    setCartCount(cart.reduce((sum, item) => sum + item.quantity, 0));
+    setCartTotal(cart.reduce((sum, item) => sum + item.quantity * item.price, 0));
+  };
 
-  const paginatedBooks = sortedBooks.slice((page - 1) * perPage, page * perPage);
-  const totalPages = Math.ceil(books.length / perPage);
+  useEffect(() => {
+    updateCartSummary();
+  }, []);
+
+  const handleAddToCart = (book: Book) => {
+    addToCart({
+      bookID: book.bookID,
+      title: book.title,
+      price: book.price,
+    });
+    alert(`${book.title} added to cart!`);
+    updateCartSummary();
+    sessionStorage.setItem('lastPage', window.location.pathname + window.location.search);
+  };
 
   return (
     <div className="container mt-4">
-      <h2>📚 Book List</h2>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h2>📚 Book List</h2>
 
-      <div className="d-flex justify-content-between mb-3">
-        <div>
-          <label className="me-2">Results per page:</label>
+        <div className="alert alert-primary mb-0">
+          <Link to="/cart" className="text-decoration-none text-dark">
+            🛒 Cart{' '}
+            <span className="badge bg-success">{cartCount}</span> | ${cartTotal.toFixed(2)}
+          </Link>
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <div className="col-md-4">
+          <label className="form-label">Filter by Category:</label>
           <select
-            value={perPage}
+            value={category}
             onChange={(e) => {
-              setPerPage(Number(e.target.value));
+              setCategory(e.target.value);
               setPage(1);
             }}
-            className="form-select d-inline w-auto"
+            className="form-select"
           >
-            {[5, 10, 15].map((n) => (
-              <option key={n} value={n}>
-                {n}
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
               </option>
             ))}
           </select>
         </div>
-
-        <button
-          className="btn btn-primary"
-          onClick={() => setSortAsc(!sortAsc)}
-        >
-          Sort by Title {sortAsc ? '⬆️' : '⬇️'}
-        </button>
       </div>
 
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
             <th>Title</th><th>Author</th><th>Publisher</th><th>ISBN</th>
-            <th>Category</th><th>Pages</th><th>Price</th>
+            <th>Category</th><th>Pages</th><th>Price</th><th>Add</th>
           </tr>
         </thead>
         <tbody>
-          {paginatedBooks.map((book) => (
+          {books.map((book) => (
             <tr key={book.bookID}>
               <td>{book.title}</td>
               <td>{book.author}</td>
@@ -80,12 +122,20 @@ const BookList: React.FC = () => {
               <td>{book.classification} / {book.category}</td>
               <td>{book.pageCount}</td>
               <td>${book.price.toFixed(2)}</td>
+              <td>
+                <button
+                  className="btn btn-sm btn-success"
+                  onClick={() => handleAddToCart(book)}
+                >
+                  🛒 Add
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between align-items-center">
         <button
           className="btn btn-secondary"
           disabled={page === 1}
