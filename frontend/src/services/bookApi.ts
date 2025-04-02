@@ -1,9 +1,9 @@
 import { Book } from "../types/Book";
 
-const API_URL = "https://mission13-bookstore-backend-ben.azurewebsites.net/Books";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getBooks = async () => {
-  const res = await fetch(`${API_URL}?pageNum=1`); // this matters!
+  const res = await fetch(`${API_URL}?pageNum=1`);
   return await res.json();
 };
 
