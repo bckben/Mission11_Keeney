@@ -1,6 +1,6 @@
 import { Book } from "../types/Book";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://mission13-bookstore-backend-ben.azurewebsites.net/Books"; // hardcoded temporarily
 
 export const getBooks = async () => {
   const res = await fetch(`${API_URL}?pageNum=1`);
