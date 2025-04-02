@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/16615c8c-dc9f-4c3d-9956-3e144a20485d/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/mission13-bookstore-backend-ben",
+    "appService.deploySubpath": "backend/Mission11_Keeney/Mission11_Keeney/publish"
+}

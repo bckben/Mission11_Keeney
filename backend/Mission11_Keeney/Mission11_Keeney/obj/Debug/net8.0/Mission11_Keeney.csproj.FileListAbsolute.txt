@@ -132,3 +132,8 @@
 /Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/obj/Debug/net8.0/Mission11_Keeney.genruntimeconfig.cache
 /Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/obj/Debug/net8.0/ref/Mission11_Keeney.dll
 /Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/obj/Debug/net8.0/Mission11_Keeney.sourcelink.json
+/Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/bin/Debug/net8.0/publish/web.config
+/Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/bin/Debug/net8.0/publish/appsettings.Development.json
+/Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/bin/Debug/net8.0/publish/appsettings.json
+/Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/bin/Debug/net8.0/publish/Mission11_Keeney.deps.json
+/Users/bckben/RiderProjects/Mission11/backend/Mission11_Keeney/Mission11_Keeney/bin/Debug/net8.0/publish/Mission11_Keeney.runtimeconfig.json
