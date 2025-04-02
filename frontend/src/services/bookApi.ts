@@ -2,8 +2,8 @@ import { Book } from "../types/Book";
 
 const API_URL = "https://mission13-bookstore-backend-ben.azurewebsites.net/Books";
 
-export const getBooks = async (pageNum = 1, category = "All") => {
-  const res = await fetch(`${API_URL}/GetAllBooks?pageNum=${pageNum}&category=${category}`);
+export const getBooks = async () => {
+  const res = await fetch(`${API_URL}?pageNum=1`); // this matters!
   return await res.json();
 };
 
