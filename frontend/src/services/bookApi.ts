@@ -1,9 +1,9 @@
 import { Book } from "../types/Book";
 
 const API_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:5006/Books"
-    : "https://mission13-bookstore-backend-ben.azurewebsites.net/Books";
+  import.meta.env.PROD
+    ? "https://mission13-bookstore-backend-ben.azurewebsites.net/Books"
+    : "http://localhost:5006/Books";
 
 export const getBooks = async () => {
   const res = await fetch(`${API_URL}`);
