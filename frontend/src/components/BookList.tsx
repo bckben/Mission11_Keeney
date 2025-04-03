@@ -19,6 +19,8 @@ interface BookApiResponse {
   totalPages: number;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const BookList: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [page, setPage] = useState(1);
@@ -30,7 +32,7 @@ const BookList: React.FC = () => {
 
   // Fetch paginated books
   useEffect(() => {
-    fetch(`http://localhost:5006/Books?pageNum=${page}&category=${category}`)
+    fetch(`${API_URL}?pageNum=${page}&category=${category}`)
       .then((res) => res.json())
       .then((data: BookApiResponse) => {
         setBooks(data.books);
@@ -41,7 +43,7 @@ const BookList: React.FC = () => {
 
   // Load categories
   useEffect(() => {
-    fetch('http://localhost:5006/Books')
+    fetch(`${API_URL}?pageNum=1`)
       .then((res) => res.json())
       .then((data: BookApiResponse) => {
         const uniqueCategories = Array.from(new Set(data.books.map((b) => b.category)));
