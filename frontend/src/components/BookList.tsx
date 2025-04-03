@@ -76,17 +76,24 @@ const BookList: React.FC = () => {
 
   return (
     <div className="container mt-4">
+      {/* Page Header with Admin Link */}
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>📚 Book List</h2>
 
-        <div className="alert alert-primary mb-0">
-          <Link to="/cart" className="text-decoration-none text-dark">
-            🛒 Cart{' '}
-            <span className="badge bg-success">{cartCount}</span> | ${cartTotal.toFixed(2)}
+        <div className="d-flex gap-2 align-items-center">
+          <Link to="/adminbooks" className="btn btn-outline-primary">
+            ✏️ Admin Book Manager - Add, Delete, and Update Books
           </Link>
+          <div className="alert alert-primary mb-0">
+            <Link to="/cart" className="text-decoration-none text-dark">
+              🛒 Cart{' '}
+              <span className="badge bg-success">{cartCount}</span> | ${cartTotal.toFixed(2)}
+            </Link>
+          </div>
         </div>
       </div>
 
+      {/* Category Filter */}
       <div className="row mb-3">
         <div className="col-md-4">
           <label className="form-label">Filter by Category:</label>
@@ -107,6 +114,7 @@ const BookList: React.FC = () => {
         </div>
       </div>
 
+      {/* Book Table */}
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
@@ -137,6 +145,7 @@ const BookList: React.FC = () => {
         </tbody>
       </table>
 
+      {/* Pagination Controls */}
       <div className="d-flex justify-content-between align-items-center">
         <button
           className="btn btn-secondary"
